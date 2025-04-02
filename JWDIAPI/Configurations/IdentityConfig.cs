@@ -1,6 +1,17 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Text;
+
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+
+using Scalar.AspNetCore;
+
 
 namespace JWDIAPI.Configurations
 {
@@ -8,6 +19,7 @@ namespace JWDIAPI.Configurations
     {
         public static void ConfigureIdentityOptions(IServiceCollection services)
         {
+            //
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -23,6 +35,27 @@ namespace JWDIAPI.Configurations
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+!";
                 options.User.RequireUniqueEmail = false;
             });
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+                options => {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        // ValidIssuer = builder.Configuration["Appsettings:Issuer"],
+                        ValidIssuer = "Me",
+                        ValidateAudience = true,
+                        ValidAudience = "ThePeople",
+                        // ValidAudience = builder.Configuration["Appsettings:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes("tokentoketokentoketokentoketokentoketokentoketokentoketokentoketokentoke")
+                            // Encoding.UTF8.GetBytes(builder.Configuration["Appsettings:Token"]),
+                            ),
+                        ValidateIssuerSigningKey = true,
+
+                        
+                    };
+                });
         }
     }
 }

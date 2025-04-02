@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using JWDIACONTRACTS.Interfaces.GeoSurvey;
 using JWDIACONTRACTS.DTO.GeoSurveyDTO;
@@ -23,6 +24,7 @@ public class GeoSurveyController: BaseApiController
     // {
     //     _logger = logger;
     // }
+    [Authorize]
     [Route("api/[controller]/GetAll")]
     [HttpGet]
     public async Task<ActionResult<List<GeochemSurvey>>> GetAllGeoSurveyDataAsync()
@@ -39,6 +41,7 @@ public class GeoSurveyController: BaseApiController
         return Ok(geoSurveyData);
     }
 
+    
     [Route("api/[controller]/GetAllUniqueElement")]
     [HttpGet]
     public async Task<ActionResult<List<string>>> GetAllUniqueElementsAsync(){
