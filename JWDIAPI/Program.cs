@@ -1,8 +1,16 @@
-using JWDIADATA.Data;
+using System.Text;
+using System.ComponentModel.DataAnnotations;
 
-using JWDIAPI.Configurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+
+
+using JWDIADATA.Data;
+using JWDIAPI.Configurations;
+
 using Scalar.AspNetCore;
 
 // Need to add a bunch of services 
@@ -10,9 +18,12 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 // Add DB Context - need to add logic for Dev vs prod etc.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 
 // Identity Configuration

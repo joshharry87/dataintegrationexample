@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
+
 using JWDIACONTRACTS.DTO.Auth;
 
 using JWDIACONTRACTS.Interfaces.Auth;
@@ -23,7 +24,7 @@ public class AuthController : BaseApiController
     }
 
     [Route("api/[controller]/Login")]
-    [HttpGet]
+    [HttpPost]
     public async Task<ActionResult<string>> Login(Login userLogin){
         var result = await  _authService.LoginAsync(userLogin);
 

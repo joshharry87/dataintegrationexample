@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 
-
 // using System.IdentityModel.Tokens.JWT;
 using JWDIADATA.Data.Entities;
 using JWDIADATA.Data;
@@ -27,6 +26,7 @@ using JWDIACONTRACTS.DTO.Auth;
 
 
 namespace JWDIACONTRACTS.Services.Auth;
+
 public class AuthService : IAuthService
 {
     private readonly ApplicationDbContext _context;
