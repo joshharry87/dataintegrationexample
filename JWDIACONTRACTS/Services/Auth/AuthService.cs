@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Reflection;
 using System.Text;
@@ -86,8 +88,7 @@ public class AuthService : IAuthService
         }
 
         string token = CreateToken(checkUser);
-        // create a token
-        // return the token
+
 
         return token;
     }
@@ -97,8 +98,12 @@ public class AuthService : IAuthService
 
     private string CreateToken (UserDataModel user) {
 
+        //https://learn.microsoft.com/en-us/dotnet/api/system.security.claims.claimtypes?view=net-9.0
         var claims = new List<Claim>{
-            new Claim(ClaimTypes.Name, user.Username)
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Role, user.Role), 
+            new Claim(ClaimTypes.Email, user.RequireUniqueEmail),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
         };
 
         // // var key = configuration.GetValue<string>("AppSettings:Token");
@@ -108,13 +113,15 @@ public class AuthService : IAuthService
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("tokentoketokentoketokentoketokentoketokentoketokentoketokentoketokentoke"));
         
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
-        
+
+        //https://learn.microsoft.com/en-us/dotnet/api/system.identitymodel.tokens.jwt.jwtsecuritytoken.-ctor?view=msal-web-dotnet-latest
         var tokenDescriptor = new JwtSecurityToken(
             issuer: "Me",
             audience: "ThePeople",
             claims: claims,
             expires: DateTime.UtcNow.AddDays(1),
             signingCredentials: creds
+          
         );
 
         return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
