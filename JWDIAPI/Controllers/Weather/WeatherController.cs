@@ -22,11 +22,7 @@ public class WeatherController : BaseApiController
     }
 
 
-    // public HomeController(ILogger<HomeController> logger)
-    // {
-    //     _logger = logger;
-    // }
-    [ServiceFilter(typeof(UsageLimitFilter))]
+    [ServiceFilter(typeof(UsageLimitFilter))] // Example of generic usage filtering application
     [Authorize(Roles = "User")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<WeatherDataModel>>> GetAllWeatherData()
