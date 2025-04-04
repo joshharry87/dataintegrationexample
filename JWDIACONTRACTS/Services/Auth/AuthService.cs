@@ -1,3 +1,4 @@
+using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -47,7 +48,9 @@ public class AuthService : IAuthService
             Username = userIn.Username,
             Password = userIn.Password, 
             RequireUniqueEmail = userIn.RequireUniqueEmail,
-            Role = "User"
+            Role = "User",
+            LastActive = DateTime.Today,
+            Usage = 0
         };
 
         var hashedPassword = new PasswordHasher<UserDataModel>().HashPassword(user, user.Password);
@@ -86,6 +89,13 @@ public class AuthService : IAuthService
            == PasswordVerificationResult.Failed){
             return null;
         }
+
+        if (checkUser.LastActive != System.DateTime.Today){
+                checkUser.LastActive = System.DateTime.Today;
+                checkUser.Usage = 0;
+                await _context.SaveChangesAsync();
+            }
+        
 
         string token = CreateToken(checkUser);
 

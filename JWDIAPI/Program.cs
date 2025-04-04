@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
-
+using JWDIAPI.Helpers.CustomPolicies;
 using JWDIADATA.Data;
 using JWDIAPI.Configurations;
 
@@ -28,6 +28,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Identity Configuration
 IdentityConfig.ConfigureIdentityOptions(builder.Services);
+
 
 
 builder.Services.AddOpenApi();
