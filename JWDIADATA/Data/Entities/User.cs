@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace JWDIADATA.Data.Entities;
 
@@ -23,5 +24,10 @@ public class UserDataModel
 
 
     public string Role {get; set;}
+
+    public DateTime LastActive {get; set;}
+
+    public int Usage {get; set;}
+
 
 }

@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 
 using JWDIADATA.Data.Entities;
 using JWDIACONTRACTS.Interfaces.Weather;
+using JWDIAPI.Helpers.CustomPolicies;
 
 
 namespace JWDIAPI.Controllers.Weather;
+
 [Route("api/[controller]")]
 [ApiController]
 public class WeatherController : BaseApiController
@@ -24,7 +26,7 @@ public class WeatherController : BaseApiController
     // {
     //     _logger = logger;
     // }
-
+    [ServiceFilter(typeof(UsageLimitFilter))]
     [Authorize(Roles = "User")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<WeatherDataModel>>> GetAllWeatherData()

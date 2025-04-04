@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using JWDIACONTRACTS.Interfaces.GeoSurvey;
 using JWDIACONTRACTS.DTO.GeoSurveyDTO;
 
-
+using JWDIAPI.Helpers.CustomPolicies;
 
 namespace JWDIAPI.Controllers.GeoSurvey;
-
 
 [Route("api/[controller]")]
 [ApiController]

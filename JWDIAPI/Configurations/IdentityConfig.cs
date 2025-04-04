@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
+
 using Scalar.AspNetCore;
 
 
@@ -17,6 +18,7 @@ namespace JWDIAPI.Configurations
 {
     public static class IdentityConfig
     {
+        
         public static void ConfigureIdentityOptions(IServiceCollection services)
         {
             //
@@ -56,6 +58,8 @@ namespace JWDIAPI.Configurations
                         
                     };
                 });
+
+           
         }
     }
 }
