@@ -34,9 +34,9 @@ public class AuthController : BaseApiController
     
     [Route("api/[controller]/CreateUser")]
     [HttpPost]
-    public async Task<ActionResult<UserDTO>> CreateNewUser(NewUser newUser){
+    public async Task<ActionResult<UserDTO>> CreateNewUser(UserBase userIn){
 
-        var user = await _authService.CreateUserAsync(newUser);
+        var user = await _authService.RemoveUserAsync(userIn);
         if (user == null){
             return BadRequest("Nope");
         }
