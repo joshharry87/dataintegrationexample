@@ -1,6 +1,7 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using JWDIACONTRACTS.DTO.Auth;
 using JWDIACONTRACTS.Interfaces.Admin;
@@ -10,6 +11,7 @@ namespace JWDIAPI.Controllers.Admin;
 
 
 [Route("api/[controller]")]
+[Authorize(Roles = "Admin")]
 [ApiController]
 public class AdminController: BaseApiController
 {
@@ -20,6 +22,7 @@ public class AdminController: BaseApiController
         _adminService = adminService;
     }
 
+    [Route("api/[controller]/GetUsers")]
     [HttpGet]
     public async Task<ActionResult<List<UserDTO>>> Get(){
 
@@ -28,6 +31,7 @@ public class AdminController: BaseApiController
         return Ok(result);
     }
 
+    [Route("api/[controller]/SetUserRole")]
     [HttpPost]
     public async Task<ActionResult<UserDTO>> SetRole(UserRole userRole){
 
@@ -40,5 +44,20 @@ public class AdminController: BaseApiController
         }
         
     }
+
+    [Route("api/[controller]/RemoveUser")]
+    [HttpPost]
+    public async Task<ActionResult<UserDTO>> RemoveUser(UserRole userRole){
+
+        var result = await _adminService.SetRolesAsync(userRole);
+        if (result != null){
+            return Ok(result);
+        }
+        else{
+            return BadRequest("Invalid User");
+        }
+        
+    }
+
 
 }
