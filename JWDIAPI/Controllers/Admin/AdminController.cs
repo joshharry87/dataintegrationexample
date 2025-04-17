@@ -47,14 +47,14 @@ public class AdminController: BaseApiController
 
     [Route("api/[controller]/RemoveUser")]
     [HttpPost]
-    public async Task<ActionResult<UserDTO>> RemoveUser(UserRole userRole){
+    public async Task<ActionResult<string>> RemoveUser(UserBase userBase){
 
-        var result = await _adminService.SetRolesAsync(userRole);
+        var result = await _adminService.RemoveUserAsync(userBase);
         if (result != null){
             return Ok(result);
         }
         else{
-            return BadRequest("Invalid User");
+            return BadRequest("Username Does Not Exist!");
         }
         
     }
