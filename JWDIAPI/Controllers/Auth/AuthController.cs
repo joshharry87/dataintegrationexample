@@ -34,11 +34,24 @@ public class AuthController : BaseApiController
     
     [Route("api/[controller]/CreateUser")]
     [HttpPost]
-    public async Task<ActionResult<UserDTO>> CreateNewUser(UserBase userIn){
+    public async Task<ActionResult<UserDTO>> CreateNewUser(NewUser userIn){
 
-        var user = await _authService.RemoveUserAsync(userIn);
+        var user = await _authService.CreateUserAsync(userIn);
         if (user == null){
             return BadRequest("Nope");
+        }
+        else{
+            return Ok(user);
+        } 
+    }
+
+    [Route("api/[controller]/ChangePassword")]
+    [HttpPost]
+    public async Task<ActionResult<string>> ChangePassword(UserPasswordChange userIn){
+
+        var user = await _authService.ChangePasswordAsync(userIn);
+        if (user == null){
+            return BadRequest("Incorrect password!");
         }
         else{
             return Ok(user);

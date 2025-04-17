@@ -27,7 +27,7 @@ public class AdminService: IAdminService
         return data;
     }
 
-    public async Task<UserDTO> RemoveUserAsync(UserBase userIn){
+    public async Task<string> RemoveUserAsync(UserBase userIn){
 
         var user = await _context.Users.FirstOrDefaultAsync(p => p.Username == userIn.Username);
          if (user == null) {
@@ -36,19 +36,13 @@ public class AdminService: IAdminService
             else {
                 _context.Users.Remove(user);
                 _context.SaveChanges();
-                return new UserDTO() {
-                    Role = user.Role,
-                    Id = user.Id,
-                    Username = user.Username,
-                    RequireUniqueEmail = user.RequireUniqueEmail,
-                    Password = user.Password,
-                    
-                };
-
+            return "Removed User" ;
+                
             }
 
 
     }
+
 
     public async Task<UserDTO> SetRolesAsync(UserRole userRole){
         var user = await _context.Users.FirstOrDefaultAsync(p => p.Username == userRole.Username);

@@ -138,5 +138,28 @@ public class AuthService : IAuthService
 
         
     }
+
+    public async  Task<string> ChangePasswordAsync (UserPasswordChange userPasswordChange){
+        
+        UserDataModel checkUser = await _context.Users.SingleOrDefaultAsync(u => u.Username == userPasswordChange.Username);
+        
+        if (checkUser == null){
+
+            return null;
+        }
+        
+        if (new PasswordHasher<UserDataModel>().VerifyHashedPassword(checkUser, checkUser.Password, userPasswordChange.Password)
+           == PasswordVerificationResult.Failed){
+            return null;
+        }
+
+        var hashedPassword = new PasswordHasher<UserDataModel>().HashPassword(checkUser, userPasswordChange.Password);
+
+        checkUser.Password = hashedPassword;
+        await _context.SaveChangesAsync();
+
+        return "Password changed!";
+
+    }
     
 }
